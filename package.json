@@ -1,0 +1,46 @@
+{
+  "name": "birdlist-app",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@expo/html-elements": "^0.2.2",
+    "@react-navigation/bottom-tabs": "^6.5.2",
+    "@react-navigation/native": "^6.1.1",
+    "@react-navigation/native-stack": "^6.9.7",
+    "@react-navigation/stack": "^6.3.10",
+    "axios": "^1.2.1",
+    "events": "^3.3.0",
+    "expo": "~47.0.9",
+    "expo-linking": "^3.3.0",
+    "expo-location": "^15.0.1",
+    "expo-status-bar": "~1.4.2",
+    "expo-web-browser": "~12.0.0",
+    "google-images": "^2.1.0",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "newsapi": "^2.4.1",
+    "qs": "^6.11.0",
+    "query-string": "^8.1.0",
+    "querystring": "^0.2.1",
+    "react": "18.1.0",
+    "react-icons": "^4.7.1",
+    "react-native": "0.70.5",
+    "react-native-config": "^1.4.11",
+    "react-native-google-image-search": "^0.1.0",
+    "react-native-ionicons": "^4.6.5",
+    "react-native-maps": "1.3.2",
+    "react-native-safe-area-context": "4.4.1",
+    "react-native-screens": "~3.18.0",
+    "expo-image-picker": "~14.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9"
+  },
+  "private": true
+}
