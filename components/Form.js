@@ -23,7 +23,7 @@ const Form = () => {
                     callType={'submit'}
                 />
             </View>
-            <View>
+            <View style={styles.h1Container}>
                 <Text style={styles.header}>Upload a Picture?</Text>
                 <ImageSelector />
             </View>
@@ -41,7 +41,10 @@ const styles = StyleSheet.create({
     header: {
         color: 'white',
         fontSize: 30,
-        marginTop: 20,
+        marginBottom: 10,
         fontWeight: 'bold',
+    },
+    h1Container: {
+        alignItems: 'center',
     }
 })
