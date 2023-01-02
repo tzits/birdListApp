@@ -1,0 +1,38 @@
+import { StyleSheet, Pressable, View, Text } from "react-native"
+
+const ImageButton = ({onPress, text}) => {
+    return (
+        <Pressable style={({pressed}) => [ styles.button, pressed && styles.pressed]}  onPress={onPress}>
+            <View  style={styles.buttonView}>
+                <Text style={styles.buttonText}>{text}</Text>
+            </View>
+        </Pressable>
+    )
+}
+
+export default ImageButton
+
+const styles = StyleSheet.create({
+    buttonText: {
+        color: 'brown',
+        fontSize: 18,
+        fontWeight: '500'
+    },
+    buttonView: {
+        padding: 8,
+        backgroundColor: 'white'
+    },
+    pressed: {
+        opacity: 0.7
+    },
+    button: {
+        borderRadius: 16,
+        color: 'brown',
+        margin: 4,
+        marginVertical: 12,
+        backgroundColor: 'white',
+        flex: 1,
+        alignItems: 'center', 
+        justifyContent: 'center',
+    }
+})
