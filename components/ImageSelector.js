@@ -1,7 +1,8 @@
-import { View, StyleSheet, Button, Image} from 'react-native'
+import { View, StyleSheet, Image, Pressable, Text} from 'react-native'
 import { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker'
+import ImageButton from './ImageButton'
 
 const ImageSelector = () => {
     const [image, setImage] = useState()
@@ -55,12 +56,8 @@ const ImageSelector = () => {
         <View style={styles.container}>
             {image && <Image style={styles.image} source={{ uri: image }} />}
             <View style={styles.buttonContainer}>
-                <View  style={styles.button}>
-                    <Button title="Pick image from camera roll" onPress={pickImage} />
-                </View>
-                <View  style={styles.button}>
-                    <Button title="Take a Picture" onPress={useCameraHandler} />
-                </View>
+                <ImageButton onPress={pickImage} text={'Pick Image'} />
+                <ImageButton onPress={useCameraHandler} text={'Take a Picture'} />
             </View>
         </View>
     )
@@ -70,27 +67,17 @@ export default ImageSelector
 
 const styles = StyleSheet.create({
     container: {
-        width: 300,
+        width: 340,
         alignItems: 'center', 
-        justifyContent: 'center',
         backgroundColor: 'brown',
         flex: 1
     },
     buttonContainer: {
         flexDirection: 'row'
     },
-    button: {
-        borderRadius: 4,
-        color: 'brown',
-        margin: 2,
-        backgroundColor: 'white',
-        flex: 1,
-        alignItems: 'center', 
-        justifyContent: 'center',
-    },
     image: {
         width: 300, 
-        height: 300
+        height: 300,
+        marginVertical: 20
     }
-
 })
