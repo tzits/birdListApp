@@ -7,10 +7,14 @@ import Button from "./Button";
 
 
 
-const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType}) => {
+const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, range}) => {
     const [locationPermissionInformation, requestPermission] = useForegroundPermissions()
     const navigation = useNavigation();
     const [located, setLocated] = useState(false)
+
+    if (range) {
+        console.log('we have a range', range)
+    }
 
     const verifyPermissions = async () => {
         if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
@@ -35,12 +39,12 @@ const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType}) =
             navigation.navigate('Nav', {screen: 'SubmitBirdsScreen'}, {location: location})
             return
         }
-        const localBirds = await fetchBirds(location.coords.latitude, location.coords.longitude)
+        const localBirds = await fetchBirds(location.coords.latitude, location.coords.longitude, range)
         navigation.navigate('DisplayBirds', {birdArray: localBirds})
     }
 
     const pickOnMapHandler = () => {
-        navigation.navigate('Map', {callType: {callType}})
+        navigation.navigate('Map', {callType: callType, range: range})
     }
 
     return(
@@ -60,15 +64,6 @@ const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType}) =
                     size={size} 
                     name1={name2} 
                 />
-
-                {/* <View style={styles.innerContainer}>
-                    <Text style={styles.text}>{label1}</Text>
-                    <Ionicons name={name1} size={size} color={color} onPress={getLocationHandler} />
-                </View> */}
-                {/* <View style={styles.innerContainer}>
-                    <Text style={styles.text}>{label2}</Text>
-                    <Ionicons name={name2} size={size} color={color} onPress={pickOnMapHandler} />
-                </View> */}
             </View>
         </View>
     )
