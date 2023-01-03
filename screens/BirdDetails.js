@@ -1,9 +1,10 @@
-import { StyleSheet, View, Text, Button, Image, ScrollView } from "react-native"
+import { StyleSheet, View, Text, Image, ScrollView } from "react-native"
 import * as WebBrowser from 'expo-web-browser'
 import imageSearch from 'react-native-google-image-search'
 import { useEffect, useState } from 'react'
 import { getMapPreview } from "../utils/locations"
 import MapView, { Marker } from 'react-native-maps'
+import ImageButton from "../components/ImageButton"
 
 
 
@@ -80,9 +81,10 @@ const BirdDetails = ({route}) => {
                 <View style={styles.mapContainer}>
                     {mapRender}
                 </View>
-                <View style={styles.buttonContainer}>
-                    <Text style={styles.button} onPress={() => WebBrowser.openBrowserAsync(`https://www.google.com/search?q=${searchTerm}`)}>Learn More</Text>
-                </View>
+                <ImageButton 
+                    onPress={() => WebBrowser.openBrowserAsync(`https://www.google.com/search?q=${searchTerm}`)}
+                    text={'Learn More'}
+                />
             </View>
         </ScrollView>
     )
@@ -115,7 +117,6 @@ const styles = StyleSheet.create({
     innerContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        // flex: 1
     },
     name: {
         fontWeight: 'bold',
@@ -140,9 +141,8 @@ const styles = StyleSheet.create({
     map: {
         width: '80%',
         height: '100%',
-        // borderRadius: 4
-      },
-      mapContainer: {
+    },
+    mapContainer: {
         width: '100%',
         height: 200,
         marginVertical: 8,
@@ -150,20 +150,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 4,
         overflow: 'hidden'
-      },
-      buttonContainer: {
-        backgroundColor: 'white',
-        color: 'brown',
-        borderRadius: 6,
-        padding: 4,
-      },
-      button: {
-        padding: 8,
-        color: 'brown',
-        fontWeight: 'bold',
-        fontSize: 16
-      },
-      pressed: {
-        backgroundColor: 'black',
-      }
+    }
 })
