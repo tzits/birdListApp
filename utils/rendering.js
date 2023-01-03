@@ -2,7 +2,7 @@ import { StyleSheet, Text, Image } from "react-native"
 import MapView, { Marker } from 'react-native-maps'
 
 
-export const setRender = (url, region, lat, lng, call) => {
+export const setRender = (url, call, region, lat, lng) => {
     let render = <Text style={styles.pending}>{call} Rendering</Text>
     if (url && call === 'map' ) {
         render = (
