@@ -1,5 +1,3 @@
-const API_TOKEN = 'bb47o55hjvku'
-
 export const fetchBirds = async (lat, lng, dist) => {
 
     let theBirds = [];
