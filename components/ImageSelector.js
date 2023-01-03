@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, Pressable, Text} from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
 import { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker'
@@ -56,8 +56,12 @@ const ImageSelector = () => {
         <View style={styles.container}>
             {image && <Image style={styles.image} source={{ uri: image }} />}
             <View style={styles.buttonContainer}>
-                <ImageButton onPress={pickImage} text={'Pick Image'} />
-                <ImageButton onPress={useCameraHandler} text={'Take a Picture'} />
+                <View style={styles.buttonView}>
+                    <ImageButton onPress={pickImage} text={'Pick Image'} />
+                </View>
+                <View style={styles.buttonView}>
+                    <ImageButton onPress={useCameraHandler} text={'Take a Picture'} />
+                </View>
             </View>
         </View>
     )
@@ -79,5 +83,8 @@ const styles = StyleSheet.create({
         width: 300, 
         height: 300,
         marginVertical: 20
+    },
+    buttonView: {
+        marginHorizontal: 3
     }
 })
