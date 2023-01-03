@@ -1,4 +1,3 @@
-import { StyleSheet, Text } from "react-native";
 import BirdList from "../components/BirdList";
 
 const DisplayBirds = ({route}) => {
@@ -8,7 +7,3 @@ const DisplayBirds = ({route}) => {
 }
 
 export default DisplayBirds
-
-const styles = StyleSheet.create({
-
-})
