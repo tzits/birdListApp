@@ -1,9 +1,10 @@
+const API_TOKEN = 'bb47o55hjvku'
 
-export const fetchBirds = async (lat, lng) => {
+export const fetchBirds = async (lat, lng, dist) => {
 
     let theBirds = [];
     const response = await fetch(
-        `https://api.ebird.org/v2/data/obs/geo/recent?lat=${lat}&lng=${lng}&sort=species&dist=10`, {headers: {
+        `https://api.ebird.org/v2/data/obs/geo/recent?lat=${lat}&lng=${lng}&sort=species&dist=${dist}`, {headers: {
             'X-eBirdAPIToken': API_TOKEN
         }}
     )
