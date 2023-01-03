@@ -1,10 +1,13 @@
-import { StyleSheet, View } from "react-native"
+import { StyleSheet } from "react-native"
 import MapView, { Marker } from 'react-native-maps'
 import { useCallback, useLayoutEffect, useState } from "react"
 import { Ionicons } from '@expo/vector-icons'
 import { fetchBirds } from "../utils/eBirdCalls"
 
-const Map = ({ navigation }) => {
+const Map = ({navigation, route}) => {
+    let callType = route.params.callType
+    let range = route.params.range
+
     const [selectedLocation, setSelectedLocation] = useState()
 
     const region = {
@@ -27,12 +30,16 @@ const Map = ({ navigation }) => {
             return;
         }
         const navigateToList = async () => {
-            const displayBirds = await fetchBirds(selectedLocation.lat,selectedLocation.lng)
+            const displayBirds = await fetchBirds(selectedLocation.lat,selectedLocation.lng, range)
 
             navigation.navigate('DisplayBirds', {birdArray: displayBirds})
         }
-
-        navigateToList()
+        if (callType === 'find') {
+            navigateToList()
+        }
+        else {
+            navigation.navigate('Nav', {screen: 'SubmitBirdsScreen'}, {location: selectedLocation})
+        }
 
 
     }, [navigation, selectedLocation])
