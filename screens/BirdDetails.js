@@ -1,11 +1,11 @@
-import { StyleSheet, View, Text, Image, ScrollView } from "react-native"
+import { StyleSheet, View, ScrollView } from "react-native"
 import { useEffect, useState } from 'react'
 import * as WebBrowser from 'expo-web-browser'
 import imageSearch from 'react-native-google-image-search'
-import MapView, { Marker } from 'react-native-maps'
 import { getMapPreview } from "../utils/locations"
 import ImageButton from "../components/ImageButton"
 import InfoComponent from '../components/InfoComponent'
+import { setRender } from "../utils/rendering"
 
 const BirdDetails = ({route}) => {
     const [imageUrl, setImageUrl] = useState()
@@ -35,24 +35,14 @@ const BirdDetails = ({route}) => {
         setImageAndMap()
     },[])
 
-    let imageRendering = <Text style={styles.pending}>Image Rendering</Text>
-    if (imageUrl) {
-        imageRendering = ( <Image source={{uri: imageUrl}} style={styles.image}  /> )        
-    }
-
-    let mapRender = <Text style={styles.pending}>Map Rendering</Text>
-    if (mapUrl) {
-        mapRender = (
-            <MapView style={styles.image} initialRegion={region} showsPointsOfInterest={false} scrollEnabled={false}>
-                <Marker pinColor='purple' coordinate={{latitude: lat, longitude: lng}} />
-            </MapView>)
-    }
+    let mapRender = setRender(mapUrl, region, lat, lng, 'map')
+    let imageRender = setRender(imageUrl, region, lat, lng, 'image')
 
     return (
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.innerContainer}>
-                    {imageRendering}
+                    {imageRender}
                 </View>
                 <View style={styles.outerTextContainer}>
                     <InfoComponent 
@@ -83,15 +73,6 @@ const BirdDetails = ({route}) => {
 export default BirdDetails
 
 const styles = StyleSheet.create({
-    image: {
-        height: undefined,
-        width: '86%',
-        aspectRatio: 1,
-        resizeMode: 'contain',
-        borderBottomLeftRadius: 4,
-        borderTopLeftRadius: 4,
-        marginBottom: 18,
-    },
     container: {
         flex: 1,
         alignItems: 'center',
@@ -107,10 +88,5 @@ const styles = StyleSheet.create({
     innerContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    pending: {
-        color: 'white',
-        fontSize: 16,
-        textAlign: 'center'
     }
 })
