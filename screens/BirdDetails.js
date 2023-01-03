@@ -1,13 +1,11 @@
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native"
+import { useEffect, useState } from 'react'
 import * as WebBrowser from 'expo-web-browser'
 import imageSearch from 'react-native-google-image-search'
-import { useEffect, useState } from 'react'
-import { getMapPreview } from "../utils/locations"
 import MapView, { Marker } from 'react-native-maps'
+import { getMapPreview } from "../utils/locations"
 import ImageButton from "../components/ImageButton"
 import InfoComponent from '../components/InfoComponent'
-
-
 
 const BirdDetails = ({route}) => {
     const [imageUrl, setImageUrl] = useState()
@@ -17,8 +15,7 @@ const BirdDetails = ({route}) => {
     let lng = route.params.location.lng
     let speciesInfo = route.params.speciesInfo[0]
     
-    let searchTerm = speciesInfo.comName.replace(/ /g, "+")
-    searchTerm = searchTerm + '+bird'
+    let searchTerm = speciesInfo.comName.replace(/ /g, "+") + '+bird'
 
     const region = {
         latitude: lat,
@@ -26,8 +23,6 @@ const BirdDetails = ({route}) => {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     }
-
-
 
     useEffect(() => {
         const setImageAndMap = async () => {
@@ -51,7 +46,6 @@ const BirdDetails = ({route}) => {
             <MapView style={styles.image} initialRegion={region} showsPointsOfInterest={false} scrollEnabled={false}>
                 <Marker pinColor='purple' coordinate={{latitude: lat, longitude: lng}} />
             </MapView>)
-
     }
 
     return (
