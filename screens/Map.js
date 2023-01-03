@@ -55,7 +55,7 @@ const Map = ({navigation, route}) => {
     return (
         <MapView style={styles.map} initialRegion={region} onPress={selectLocationHandler} >
             {selectedLocation && (
-                <Marker title='Search Area' coordinate={{latitude: selectedLocation.lat, longitude: selectedLocation.lng}} />)
+                <Marker coordinate={{latitude: selectedLocation.lat, longitude: selectedLocation.lng}} />)
             }
         </MapView>
     )
