@@ -5,14 +5,20 @@ import { useEffect, useState } from 'react'
 import { getMapPreview } from "../utils/locations"
 import MapView, { Marker } from 'react-native-maps'
 import ImageButton from "../components/ImageButton"
+import InfoComponent from '../components/InfoComponent'
 
 
 
 const BirdDetails = ({route}) => {
     const [imageUrl, setImageUrl] = useState()
     const [mapUrl, setMapUrl] = useState()
+    
     let lat = route.params.location.lat
     let lng = route.params.location.lng
+    let speciesInfo = route.params.speciesInfo[0]
+    
+    let searchTerm = speciesInfo.comName.replace(/ /g, "+")
+    searchTerm = searchTerm + '+bird'
 
     const region = {
         latitude: lat,
@@ -22,39 +28,27 @@ const BirdDetails = ({route}) => {
     }
 
 
-    let speciesInfo = route.params.speciesInfo[0]
-    let searchTerm = speciesInfo.comName.replace(/ /g, "+")
-    searchTerm = searchTerm + '+bird'
 
     useEffect(() => {
-        let speciesInfo = route.params.speciesInfo[0]
-        let searchStart = speciesInfo.comName.replace(/ /g, "+")
-        let searchTerm = searchStart + '+bird'
-        const setImage = async () => {
-    
+        const setImageAndMap = async () => {
             let imageUri = await imageSearch(searchTerm, 0, 5)
             let imageLink = imageUri[0].link
             setImageUrl(imageLink)
+            let birdLocation = getMapPreview(lat,lng)
+            setMapUrl(birdLocation)
         }
-        setImage()
+        setImageAndMap()
     },[])
 
-    useEffect(() => {
-        let birdLocation = getMapPreview(lat,lng)
-        setMapUrl(birdLocation)
-    },[])
-
-    let imageRendering = <Text style={styles.name}>Image Rendering</Text>
-
+    let imageRendering = <Text style={styles.pending}>Image Rendering</Text>
     if (imageUrl) {
         imageRendering = ( <Image source={{uri: imageUrl}} style={styles.image}  /> )        
     }
 
-    let mapRender = <Text style={styles.name}>Map Rendering</Text>
-
+    let mapRender = <Text style={styles.pending}>Map Rendering</Text>
     if (mapUrl) {
         mapRender = (
-            <MapView style={styles.map} initialRegion={region}>
+            <MapView style={styles.image} initialRegion={region} showsPointsOfInterest={false} scrollEnabled={false}>
                 <Marker pinColor='purple' coordinate={{latitude: lat, longitude: lng}} />
             </MapView>)
 
@@ -66,19 +60,21 @@ const BirdDetails = ({route}) => {
                 <View style={styles.innerContainer}>
                     {imageRendering}
                 </View>
-                <View stlye={styles.outerTextContainer}>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.name}>{speciesInfo.comName}</Text>
-                        <Text style={styles.text}>Scientific Name: {speciesInfo.sciName}</Text>
-                        <Text style={styles.text}>Bird Type: {speciesInfo.familyComName}</Text>
-                    </View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.heading} >Taxonomy</Text>
-                        <Text style={styles.text} >Family: {speciesInfo.familySciName}</Text>
-                        <Text style={styles.text} >Order: {speciesInfo.order}</Text>
-                    </View>
+                <View style={styles.outerTextContainer}>
+                    <InfoComponent 
+                        text1={speciesInfo.comName}
+                        text2={speciesInfo.sciName}
+                        text3={speciesInfo.familyComName}
+                        size={24}
+                    />
+                    <InfoComponent 
+                        text1={'Taxonomy'}
+                        text2={speciesInfo.familySciName}
+                        text3={speciesInfo.order}
+                        size={18}
+                    />
                 </View>
-                <View style={styles.mapContainer}>
+                <View style={styles.innerContainer}>
                     {mapRender}
                 </View>
                 <ImageButton 
@@ -107,48 +103,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'brown',
-        paddingBottom: 100
+        marginBottom: 80
     },
     outerTextContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        paddingBottom: 40
+
     },
     innerContainer: {
         alignItems: 'center',
         justifyContent: 'center',
     },
-    name: {
-        fontWeight: 'bold',
-        fontSize: 24,
-        marginVertical: 6,
-        color: 'white'
-    },
-    textContainer: {
-        marginBottom: 12,
-        color: 'white'
-    },
-    text: {
+    pending: {
+        color: 'white',
         fontSize: 16,
-        color: 'white'
-    },
-    heading: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 6,
-        color: 'white'
-    },
-    map: {
-        width: '80%',
-        height: '100%',
-    },
-    mapContainer: {
-        width: '100%',
-        height: 200,
-        marginVertical: 8,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        overflow: 'hidden'
+        textAlign: 'center'
     }
 })
