@@ -20,19 +20,17 @@ const styles = StyleSheet.create({
     },
     buttonView: {
         padding: 8,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        width: 140,
+        alignItems: 'center'
     },
     pressed: {
         opacity: 0.7
     },
     button: {
-        borderRadius: 16,
-        color: 'brown',
-        margin: 4,
-        marginVertical: 12,
         backgroundColor: 'white',
-        flex: 1,
-        alignItems: 'center', 
-        justifyContent: 'center',
+        color: 'brown',
+        borderRadius: 6,
+        padding: 4,
     }
 })
