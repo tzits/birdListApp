@@ -7,14 +7,10 @@ import Button from "./Button";
 
 
 
-const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, range}) => {
+const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, range, onPickLocation}) => {
     const [locationPermissionInformation, requestPermission] = useForegroundPermissions()
     const navigation = useNavigation();
     const [located, setLocated] = useState(false)
-
-    if (range) {
-        console.log('we have a range', range)
-    }
 
     const verifyPermissions = async () => {
         if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
@@ -37,6 +33,7 @@ const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, ra
         setLocated(true)
         if (callType !== 'find') {
             navigation.navigate('Nav', {screen: 'SubmitBirdsScreen'}, {location: location})
+            onPickLocation({lat: location.coords.latitude, lng: location.coords.longitude})
             return
         }
         const localBirds = await fetchBirds(location.coords.latitude, location.coords.longitude, range)
@@ -44,7 +41,7 @@ const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, ra
     }
 
     const pickOnMapHandler = () => {
-        navigation.navigate('Map', {callType: callType, range: range})
+        navigation.navigate('Map', {callType: callType, range: range, onPickLocation: onPickLocation})
     }
 
     return(
