@@ -3,7 +3,8 @@ import FormElement from "./FormElement";
 import DoubleButtons from "./DoubleButton";
 import ImageSelector from "./ImageSelector";
 
-const Form = () => {
+const Form = ({onPickLocation}) => {
+
     return (
         <View style={styles.bodyView}>
             <View style={styles.formView}>
@@ -21,6 +22,7 @@ const Form = () => {
                     label1={'Use Current Location'}
                     label2={'Pick Location on Map'}
                     callType={'submit'}
+                    onPickLocation={onPickLocation}
                 />
             </View>
             <View style={styles.h1Container}>
