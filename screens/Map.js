@@ -7,6 +7,7 @@ import { fetchBirds } from "../utils/eBirdCalls"
 const Map = ({navigation, route}) => {
     let callType = route.params.callType
     let range = route.params.range
+    let onPickLocation = route.params.onPickLocation
 
     const [selectedLocation, setSelectedLocation] = useState()
 
@@ -20,7 +21,6 @@ const Map = ({navigation, route}) => {
     const selectLocationHandler = (event) => {
         const lat = event.nativeEvent.coordinate.latitude
         const lng = event.nativeEvent.coordinate.longitude
-
         setSelectedLocation({lat: lat, lng: lng})
     }
 
@@ -31,13 +31,13 @@ const Map = ({navigation, route}) => {
         }
         const navigateToList = async () => {
             const displayBirds = await fetchBirds(selectedLocation.lat,selectedLocation.lng, range)
-
             navigation.navigate('DisplayBirds', {birdArray: displayBirds})
         }
         if (callType === 'find') {
             navigateToList()
         }
         else {
+            onPickLocation(selectedLocation)
             navigation.navigate('Nav', {screen: 'SubmitBirdsScreen'}, {location: selectedLocation})
         }
 
