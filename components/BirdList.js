@@ -1,11 +1,9 @@
 import { StyleSheet, FlatList, ScrollView } from "react-native"
 import ListItem from "./ListItem"
 import BirdCard from "./BirdCard"
-import NewsItem from "./NewsItem"
 
 const BirdList = ({data}) => {
     const renderItem = ({ item }) => {
-      console.log(item)
       if(item.speciesCode) {
         return (
           <ScrollView>
