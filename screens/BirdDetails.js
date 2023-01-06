@@ -14,9 +14,8 @@ const BirdDetails = ({route}) => {
     let lat = route.params.location.lat
     let lng = route.params.location.lng
     let speciesInfo = route.params.speciesInfo
-    console.log(speciesInfo)
 
-    let searchTerm = speciesInfo.species
+    let searchTerm = speciesInfo.species.replace(/ /g, "+")
     if (speciesInfo.comName != undefined) {
         searchTerm = searchTerm = speciesInfo.comName.replace(/ /g, "+") + '+bird'
     }
@@ -39,12 +38,6 @@ const BirdDetails = ({route}) => {
     let mapRender = setRender(mapUrl, 'map', lat, lng)
     let imageRender = setRender(imageUrl, 'image')
 
-    let imageButton =  
-    (<ImageButton 
-        onPress={() => WebBrowser.openBrowserAsync(`https://www.google.com/search?q=${searchTerm}`)}
-        text={'Learn More'}
-    />)
-
     let info = (
         <>
             <InfoComponent 
@@ -63,7 +56,7 @@ const BirdDetails = ({route}) => {
     )
 
     if(!speciesInfo.comName) {
-        imageButton = null
+        // imageButton = null
         info = (
             <InfoComponent
                 text1={speciesInfo.species}
@@ -87,7 +80,10 @@ const BirdDetails = ({route}) => {
                 <View style={styles.innerContainer}>
                     {mapRender}
                 </View>
-                {imageButton}
+                <ImageButton 
+        onPress={() => WebBrowser.openBrowserAsync(`https://www.google.com/search?q=${searchTerm}`)}
+        text={'Learn More'}
+    />
             </View>
         </ScrollView>
     )
