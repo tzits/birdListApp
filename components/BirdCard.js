@@ -1,16 +1,22 @@
 import { StyleSheet, View, Pressable, Image, Text } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 
 const BirdCard = ({sighting}) => {
 
+    const navigation = useNavigation()
     let image = <Image style={styles.image} source={{uri: sighting.imageUrl}} />
 
     if (sighting.imageUrl === '../assets/bird_default.png') {
         image = <Image style={styles.image} source={require('../assets/images/bird_default.png')} />
     }
 
+    const getDetailsHandler = async () => {
+        navigation.navigate('BirdDetails', {speciesInfo: sighting, location: {lat: sighting.lat, lng: sighting.lng}})
+    }
+
     return (
-        <Pressable style={({pressed}) => [styles.item, pressed && styles.pressed]} >
+        <Pressable style={({pressed}) => [styles.item, pressed && styles.pressed]} onPress={getDetailsHandler}>
             {image}
             <View style={styles.info}>
                 <Text style={styles.title}>{sighting.species}</Text>
