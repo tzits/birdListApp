@@ -1,15 +1,8 @@
 import { StyleSheet, Text, View, ScrollView  } from "react-native";
-import { useState, useCallback } from 'react'
 import Form from "../components/Form";
 
 const SubmitBirdsScreen = ({route}) => {
-    const [pickedLocation, setPickedLocation] = useState()
 
-    const pickLocationHandler = useCallback((location) => {
-        setPickedLocation(location)
-    },[])
-
-    console.log(pickedLocation)
 
     return(
         <ScrollView style={styles.scroll}>
@@ -17,7 +10,7 @@ const SubmitBirdsScreen = ({route}) => {
                 <View style={styles.headerView}>
                     <Text style={styles.header}>Submit a Bird</Text>
                 </View>
-                <Form onPickLocation={pickLocationHandler} />
+                <Form />
             </View>
         </ScrollView>
     )
