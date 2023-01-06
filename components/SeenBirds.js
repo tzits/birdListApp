@@ -4,7 +4,7 @@ import BirdCard from './BirdCard'
 const SeenBirds = ({data}) => {
 
     return (
-      <FlatList style={styles.container}
+      <FlatList
         data={data}
         renderItem={({item}) => <BirdCard sighting={item} />} 
         keyExtractor={(data) => data.time}
