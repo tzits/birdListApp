@@ -6,7 +6,7 @@ import NewsItem from "./NewsItem"
 const BirdList = ({data}) => {
     const renderItem = ({ item }) => {
       console.log(item)
-      if(data[0].speciesComName) {
+      if(item.speciesCode) {
         return (
           <ScrollView>
             <ListItem {...item}  />
