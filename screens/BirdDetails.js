@@ -13,21 +13,22 @@ const BirdDetails = ({route}) => {
     
     let lat = route.params.location.lat
     let lng = route.params.location.lng
-    let speciesInfo = route.params.speciesInfo[0]
-    
-    let searchTerm = speciesInfo.comName.replace(/ /g, "+") + '+bird'
+    let speciesInfo = route.params.speciesInfo
+    console.log(speciesInfo)
 
-    const region = {
-        latitude: lat,
-        longitude: lng,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+    let searchTerm = speciesInfo.species
+    if (speciesInfo.comName != undefined) {
+        searchTerm = searchTerm = speciesInfo.comName.replace(/ /g, "+") + '+bird'
     }
+    
 
     useEffect(() => {
         const setImageAndMap = async () => {
-            let imageUri = await imageSearch(searchTerm, 0, 5)
-            let imageLink = imageUri[0].link
+            let imageLink = speciesInfo.imageUrl
+            if (!speciesInfo.imageUrl || speciesInfo.imageUrl === '../assets/bird_default.png') {
+                let imageUri = await imageSearch(searchTerm, 0, 5)
+                imageLink = imageUri[0].link
+            }
             setImageUrl(imageLink)
             let birdLocation = getMapPreview(lat,lng)
             setMapUrl(birdLocation)
@@ -35,8 +36,44 @@ const BirdDetails = ({route}) => {
         setImageAndMap()
     },[])
 
-    let mapRender = setRender(mapUrl, 'map', region, lat, lng)
+    let mapRender = setRender(mapUrl, 'map', lat, lng)
     let imageRender = setRender(imageUrl, 'image')
+
+    let imageButton =  
+    (<ImageButton 
+        onPress={() => WebBrowser.openBrowserAsync(`https://www.google.com/search?q=${searchTerm}`)}
+        text={'Learn More'}
+    />)
+
+    let info = (
+        <>
+            <InfoComponent 
+                text1={speciesInfo.comName}
+                text2={speciesInfo.sciName}
+                text3={speciesInfo.familyComName}
+                size={24}
+            />
+            <InfoComponent 
+                text1={'Taxonomy'}
+                text2={speciesInfo.familySciName}
+                text3={speciesInfo.order}
+                size={18}
+            />
+        </>
+    )
+
+    if(!speciesInfo.comName) {
+        imageButton = null
+        info = (
+            <InfoComponent
+                text1={speciesInfo.species}
+                text2={speciesInfo.count}
+                text3={`Seen at ${speciesInfo.time} on ${speciesInfo.date}`}
+                size={24}
+            />
+        )
+    }
+
 
     return (
         <ScrollView>
@@ -45,26 +82,12 @@ const BirdDetails = ({route}) => {
                     {imageRender}
                 </View>
                 <View style={styles.outerTextContainer}>
-                    <InfoComponent 
-                        text1={speciesInfo.comName}
-                        text2={speciesInfo.sciName}
-                        text3={speciesInfo.familyComName}
-                        size={24}
-                    />
-                    <InfoComponent 
-                        text1={'Taxonomy'}
-                        text2={speciesInfo.familySciName}
-                        text3={speciesInfo.order}
-                        size={18}
-                    />
+                    {info}
                 </View>
                 <View style={styles.innerContainer}>
                     {mapRender}
                 </View>
-                <ImageButton 
-                    onPress={() => WebBrowser.openBrowserAsync(`https://www.google.com/search?q=${searchTerm}`)}
-                    text={'Learn More'}
-                />
+                {imageButton}
             </View>
         </ScrollView>
     )
@@ -77,7 +100,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'brown',
+        backgroundColor: 'darkgreen',
         marginBottom: 80
     },
     outerTextContainer: {
