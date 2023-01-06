@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker'
 import ImageButton from './ImageButton'
 
-const ImageSelector = () => {
+const ImageSelector = ({onPickImage}) => {
     const [image, setImage] = useState()
 
     const pickImage = async () => {
@@ -17,6 +17,7 @@ const ImageSelector = () => {
 
         if (!result.canceled) {
             setImage(result.assets[0].uri)
+            onPickImage(result.assets[0].uri)
         }
     }
 
@@ -48,9 +49,8 @@ const ImageSelector = () => {
             quality: 0.5,
         });
         setImage(image.assets[0].uri)
+        onPickImage(image.assets[0].uri)
     }
-
-
 
     return(
         <View style={styles.container}>
