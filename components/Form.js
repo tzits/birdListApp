@@ -1,12 +1,44 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import FormElement from "./FormElement";
 import DoubleButtons from "./DoubleButton";
 import ImageSelector from "./ImageSelector";
+import ImageButton from "./ImageButton";
+import { useState, useCallback } from 'react'
+import { setMinutes } from "../utils/date";
+import { BirdSighting } from "../models/BirdSighting";
 
-const Form = ({onPickLocation}) => {
+const Form = () => {
+    const [pickedLocation, setPickedLocation] = useState()
+    const [imageUrl, setImageUrl] = useState()
+
+    const pickLocationHandler = useCallback((location) => {
+        setPickedLocation(location)
+    },[])
+
+    const pickImageHandler = useCallback((url) => {
+        setImageUrl(url)
+    },[])
+
+    const submitBirdHandler = () => {
+        console.log('help')
+        let dateTime = new Date()
+        let date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
+        let time = `${dateTime.getHours()}:${setMinutes(dateTime)}`
+        if (pickedLocation) {
+            console.log(pickedLocation, date, time, imageUrl)
+            let url = imageUrl
+            if (!imageUrl) {
+                url = '../assets/bird_default.png'
+            }
+            let myBird = new BirdSighting('Yellow Naped Amazon',1, pickedLocation, time, date, url)
+            console.log(myBird)
+        } else {
+            alert('Location Needed')
+        }
+    }
 
     return (
-        <View style={styles.bodyView}>
+        <ScrollView style={styles.bodyView}>
             <View style={styles.formView}>
                 <FormElement prompt='Species Name' />
             </View>
@@ -22,14 +54,17 @@ const Form = ({onPickLocation}) => {
                     label1={'Use Current Location'}
                     label2={'Pick Location on Map'}
                     callType={'submit'}
-                    onPickLocation={onPickLocation}
+                    onPickLocation={pickLocationHandler}
                 />
             </View>
             <View style={styles.h1Container}>
                 <Text style={styles.header}>Upload a Picture?</Text>
-                <ImageSelector />
+                <ImageSelector onPickImage={pickImageHandler} />
             </View>
-        </View>
+            <View style={styles.submitButton}>
+                <ImageButton onPress={submitBirdHandler} text={'Submit'} />
+            </View>
+        </ScrollView>
     )
 }
 
@@ -48,5 +83,9 @@ const styles = StyleSheet.create({
     },
     h1Container: {
         alignItems: 'center',
+    },
+    submitButton: {
+        marginVertical: 10,
+        alignItems: 'center'
     }
 })
