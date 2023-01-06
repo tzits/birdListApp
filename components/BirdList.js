@@ -1,10 +1,12 @@
-import { StyleSheet, FlatList, ScrollView, Text } from "react-native"
+import { StyleSheet, FlatList, ScrollView } from "react-native"
 import ListItem from "./ListItem"
+import BirdCard from "./BirdCard"
 import NewsItem from "./NewsItem"
 
 const BirdList = ({data}) => {
     const renderItem = ({ item }) => {
-      if(data[0].location) {
+      console.log(item)
+      if(data[0].speciesComName) {
         return (
           <ScrollView>
             <ListItem {...item}  />
@@ -13,15 +15,16 @@ const BirdList = ({data}) => {
       } else {
         return (
         <ScrollView>
-          <NewsItem {...item} />
-        </ScrollView>)
+          <BirdCard sighting={item} />
+        </ScrollView>
+        )
       }
       }
     return (
       <FlatList style={styles.container}
         data={data}
         renderItem={renderItem}
-        keyExtractor={(bird) => bird.species}
+        keyExtractor={(bird) => bird.time}
       />
     )
 }
@@ -30,6 +33,6 @@ export default BirdList
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'brown'
+        backgroundColor: 'darkgreen'
     }
 })
