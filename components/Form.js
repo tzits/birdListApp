@@ -6,6 +6,7 @@ import ImageButton from "./ImageButton";
 import { useState, useCallback } from 'react'
 import { setMinutes } from "../utils/date";
 import { BirdSighting } from "../models/BirdSighting";
+import { insertBirdSighting } from '../utils/database'
 
 const Form = () => {
     const [pickedLocation, setPickedLocation] = useState()
@@ -20,18 +21,17 @@ const Form = () => {
     },[])
 
     const submitBirdHandler = () => {
-        console.log('help')
         let dateTime = new Date()
         let date = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`
         let time = `${dateTime.getHours()}:${setMinutes(dateTime)}`
         if (pickedLocation) {
-            console.log(pickedLocation, date, time, imageUrl)
+
             let url = imageUrl
             if (!imageUrl) {
                 url = '../assets/bird_default.png'
             }
             let myBird = new BirdSighting('Yellow Naped Amazon',1, pickedLocation, time, date, url)
-            console.log(myBird)
+            insertBirdSighting(myBird)
         } else {
             alert('Location Needed')
         }
