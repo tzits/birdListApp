@@ -1,11 +1,10 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, onChangeText } from "react-native";
 
-const FormElement = ({prompt}) => {
-    console.log(prompt)
+const FormElement = ({prompt, keyboardType, val, onChangeText}) => {
     return (
         <>
             <Text style={styles.label}>{prompt}</Text>
-            <TextInput style={styles.input} />
+            <TextInput style={styles.input} keyboardType={keyboardType} onChangeText={onChangeText} value={val} />
         </>
     )
 }
