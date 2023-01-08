@@ -1,9 +1,10 @@
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StyleSheet, View, Text, ScrollView, TextInput } from "react-native";
+import { useState, useCallback } from 'react'
+import { useNavigation } from '@react-navigation/native'
 import FormElement from "./FormElement";
 import DoubleButtons from "./DoubleButton";
 import ImageSelector from "./ImageSelector";
 import ImageButton from "./ImageButton";
-import { useState, useCallback } from 'react'
 import { setMinutes } from "../utils/date";
 import { BirdSighting } from "../models/BirdSighting";
 import { insertBirdSighting } from '../utils/database'
@@ -11,6 +12,19 @@ import { insertBirdSighting } from '../utils/database'
 const Form = () => {
     const [pickedLocation, setPickedLocation] = useState()
     const [imageUrl, setImageUrl] = useState()
+    const [birdSpecies, setBirdSpecies] = useState()
+    const [birdCount, setBirdCount] = useState()
+    const [imagePreview, setImagePreview] = useState()
+
+    const changeBirdSpeciesHandler = (enteredText) => {
+        setBirdSpecies(enteredText)
+    }
+
+    const changeBirdCountHandler = (enteredText) => {
+        setBirdCount(enteredText)
+    }
+
+    const navigation = useNavigation()
 
     const pickLocationHandler = useCallback((location) => {
         setPickedLocation(location)
@@ -19,6 +33,10 @@ const Form = () => {
     const pickImageHandler = useCallback((url) => {
         setImageUrl(url)
     },[])
+
+    const onSetImagePreview = () => {
+        setImagePreview
+    }
 
     const submitBirdHandler = () => {
         let dateTime = new Date()
@@ -30,8 +48,14 @@ const Form = () => {
             if (!imageUrl) {
                 url = '../assets/bird_default.png'
             }
-            let myBird = new BirdSighting('Yellow Naped Amazon',1, pickedLocation, time, date, url)
+            let myBird = new BirdSighting(birdSpecies, birdCount, pickedLocation, time, date, url)
             insertBirdSighting(myBird)
+            navigation.navigate('Bird List')
+            setBirdSpecies()
+            setBirdCount()
+            setImageUrl()
+            setPickedLocation()
+            setImagePreview()
         } else {
             alert('Location Needed')
         }
@@ -40,10 +64,20 @@ const Form = () => {
     return (
         <ScrollView style={styles.bodyView}>
             <View style={styles.formView}>
-                <FormElement prompt='Species Name' />
+                <FormElement 
+                    prompt='Species Name' 
+                    val={birdSpecies} 
+                    keyboardType={'default'}
+                    onChangeText={changeBirdSpeciesHandler}
+                    />
             </View>
             <View style={styles.formView}>
-                <FormElement prompt='Number Seen' />
+                <FormElement 
+                    prompt='Number Seen' 
+                    val={birdCount} 
+                    keyboardType={'number-pad'}
+                    onChangeText={changeBirdCountHandler}
+                    />
             </View>
             <View style={styles.formView}>
                 <DoubleButtons 
@@ -59,10 +93,10 @@ const Form = () => {
             </View>
             <View style={styles.h1Container}>
                 <Text style={styles.header}>Upload a Picture?</Text>
-                <ImageSelector onPickImage={pickImageHandler} />
+                <ImageSelector onPickImage={pickImageHandler} onSetImagePreview={onSetImagePreview}/>
             </View>
             <View style={styles.submitButton}>
-                <ImageButton onPress={submitBirdHandler} text={'Submit'} />
+                <ImageButton onPress={submitBirdHandler} text={'Submit'}  />
             </View>
         </ScrollView>
     )
