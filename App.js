@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
@@ -9,10 +9,10 @@ import FindBirdsScreen from './screens/FindBirdsScreen';
 import DisplayBirds from './screens/DisplayBirds';
 import BirdDetails from './screens/BirdDetails';
 import WelcomeScreen from './screens/WelcomeScreen';
-import News from './screens/News';
 import SubmitBirdsScreen from './screens/SubmitBirdsScreen';
 import { useEffect, useState} from 'react';
 import { init } from './utils/database';
+import { Ionicons } from '@expo/vector-icons'
 
 
 export default function App() {
@@ -28,6 +28,18 @@ export default function App() {
   const Stack = createNativeStackNavigator()
   const BottomTab = createBottomTabNavigator()
 
+  const homeButton = ({ navigation, route}) => ({
+    headerRight: () => 
+      <Ionicons 
+        style={{paddingRight: 8}}
+        name={'home'} 
+        size={24} 
+        color={'white'} 
+        onPress={() => {navigation.navigate('Home')}}
+        />
+  })
+  
+
   const BottomNav = () => {
     return (
     <BottomTab.Navigator 
@@ -36,29 +48,42 @@ export default function App() {
               headerTintColor: 'white',
               contentStyle: { backgroundColor: 'darkgreen'}
             }}
+
     >
-      <BottomTab.Screen name="Home" component={WelcomeScreen} />
-      {/* <BottomTab.Screen name='News' component={News} /> */}
-      <BottomTab.Screen name="Find Birds" component={FindBirdsScreen} />
-      <BottomTab.Screen name="Submit Bird" component={SubmitBirdsScreen} />
-      <BottomTab.Screen name="Bird List" component={SeenBirdsScreen} />
+      <BottomTab.Screen 
+        name="Home" 
+        component={WelcomeScreen} 
+      />
+      <BottomTab.Screen 
+        name="Find Birds" 
+        component={FindBirdsScreen}
+        options={homeButton}           
+      />
+      <BottomTab.Screen name="Submit Bird" component={SubmitBirdsScreen} options={homeButton} />
+      <BottomTab.Screen name="Bird List" component={SeenBirdsScreen} options={homeButton} />
     </BottomTab.Navigator>)
   }
-
 
   return (
     <>
       <StatusBar  style='light' />
       <NavigationContainer>
         <Stack.Navigator
-            screenOptions={{
+            screenOptions={ {
               headerStyle: { backgroundColor: 'darkgreen'},
               headerTintColor: 'white',
-              contentStyle: { backgroundColor: 'darkgreen'}
+              contentStyle: { backgroundColor: 'darkgreen'},
             }}
         >
-          <Stack.Screen name='Nav' component={BottomNav} options={{headerShown: false}} />
-          <Stack.Screen name="DisplayBirds" component={DisplayBirds} />
+          <Stack.Screen 
+            name='Nav' 
+            component={BottomNav} 
+            options={{headerShown: false}} />
+          <Stack.Screen 
+            name="DisplayBirds" 
+            component={DisplayBirds} 
+            options={homeButton}
+          />
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen name="BirdDetails" component={BirdDetails} options={{presentation: 'modal'}} />
         </Stack.Navigator>
