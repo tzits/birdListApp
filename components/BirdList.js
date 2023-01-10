@@ -2,7 +2,8 @@ import { StyleSheet, FlatList, ScrollView } from "react-native"
 import ListItem from "./ListItem"
 import BirdCard from "./BirdCard"
 
-const BirdList = ({data}) => {
+const BirdList = ({data, onDeleteHandler}) => {
+
     const renderItem = ({ item }) => {
       if(item.speciesCode) {
         return (
@@ -13,7 +14,10 @@ const BirdList = ({data}) => {
       } else {
         return (
         <ScrollView>
-          <BirdCard sighting={item} />
+          <BirdCard 
+            sighting={item}
+            onDeleteHandler={onDeleteHandler}
+        />
         </ScrollView>
         )
       }
@@ -22,7 +26,8 @@ const BirdList = ({data}) => {
       <FlatList style={styles.container}
         data={data}
         renderItem={renderItem}
-        keyExtractor={(bird) => bird.time}
+        keyExtractor={(bird) => bird.id}
+        extraData={data}
       />
     )
 }
