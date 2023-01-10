@@ -1,10 +1,12 @@
 import { StyleSheet, View, Pressable, Image, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { removeFromList } from '../utils/database'
 
 
-const BirdCard = ({sighting}) => {
+const BirdCard = ({sighting, onDeleteHandler}) => {
 
-    const navigation = useNavigation()
+
+    const navigation = useNavigation();
     let image = <Image style={styles.image} source={{uri: sighting.imageUrl}} />
 
     if (sighting.imageUrl === '../assets/bird_default.png') {
@@ -15,6 +17,10 @@ const BirdCard = ({sighting}) => {
         navigation.navigate('BirdDetails', {speciesInfo: sighting, location: {lat: sighting.lat, lng: sighting.lng}})
     }
 
+    const deleteCardHandler = () => {
+        onDeleteHandler(sighting)
+    }
+
     return (
         <Pressable style={({pressed}) => [styles.item, pressed && styles.pressed]} onPress={getDetailsHandler}>
             {image}
@@ -22,6 +28,11 @@ const BirdCard = ({sighting}) => {
                 <Text style={styles.title}>{sighting.species}</Text>
                 <Text style={styles.address}>{sighting.time} on {sighting.date}</Text>
             </View>
+            <Pressable style={styles.xIconView} onPress={deleteCardHandler}>
+                <View style={styles.xIconView}>
+                    <Text style={styles.xIcon}>X</Text>
+                </View> 
+            </Pressable>
         </Pressable>
     )
 }
@@ -62,5 +73,15 @@ const styles = StyleSheet.create({
     info: {
         flex: 2,
         padding: 12
+    },
+    xIcon: {
+        color: 'red',
+        fontSize: 20
+    },
+    xIconView: {
+        flex: .5,
+        alignItems: 'center',
+        justifyContent: 'center'
+
     }
 })
