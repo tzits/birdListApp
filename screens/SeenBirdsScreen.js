@@ -1,9 +1,8 @@
 import { useIsFocused } from '@react-navigation/native'
 import { useEffect, useState } from 'react'
-import { View, StyleSheet } from 'react-native'
 
 import BirdList from '../components/BirdList'
-import { fetchBirdSightings } from '../utils/database'
+import { fetchBirdSightings, removeFromList } from '../utils/database'
 
 
 const SeenBirdsScreen = () => {
@@ -20,8 +19,18 @@ const SeenBirdsScreen = () => {
             loadBirds()
         }
     }, [isFocused])
+
+    const removeSightingHandler = (sighting) => {
+        removeFromList(+sighting.id)
+        const updatedSightings = async () => {
+            const newSightings = await fetchBirdSightings()
+            setLoadedBirds(newSightings)
+        }
+        updatedSightings()
+    }
+
     return (
-        <BirdList data={loadedBirds} />
+        <BirdList data={loadedBirds} onDeleteHandler={removeSightingHandler} />
     )
 }
 
