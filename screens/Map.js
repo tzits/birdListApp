@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet, Text, Pressable } from "react-native"
 import MapView, { Marker } from 'react-native-maps'
 import { useCallback, useLayoutEffect, useState } from "react"
 import { Ionicons } from '@expo/vector-icons'
@@ -16,6 +16,13 @@ const Map = ({navigation, route}) => {
         longitude: -73.9656,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
+    }
+
+    let iconText='radio-button-off'
+    let myText = ""
+    if (selectedLocation) {
+        iconText='checkmark-circle-outline'
+        myText = 'View Birds'
     }
 
     const selectLocationHandler = (event) => {
@@ -47,7 +54,10 @@ const Map = ({navigation, route}) => {
     useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: ({tintColor}) => (
-                <Ionicons name={'save'} size={24} color={tintColor} onPress={savePickedLocationHandler} />
+                <Pressable style={styles.pressable} onPress={savePickedLocationHandler}>
+                    <Text style={styles.buttonText}>{myText}</Text>
+                    <Ionicons name={iconText} size={24} color={tintColor} onPress={savePickedLocationHandler} />
+                </Pressable>
             )
         })
     }, [navigation, savePickedLocationHandler])
@@ -66,5 +76,15 @@ export default Map
 const styles=StyleSheet.create({
     map: {
         flex: 1
+    },
+    pressable: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center'
+    },
+    buttonText: {
+        marginRight: 3,
+        fontSize: 16,
+        color: 'white'
     }
 })
