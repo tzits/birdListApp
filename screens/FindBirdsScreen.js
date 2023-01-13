@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import DoubleButtons from '../components/DoubleButton'
 import { useState } from 'react'
 import { SelectList } from 'react-native-dropdown-select-list'
@@ -14,6 +14,7 @@ const FindBirdsScreen = () => {
     ]
 
     return (
+        
         <View style={styles.container}>
             <View style={styles.dropdownContainer}>
                 <SelectList
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: 'brown'
+        backgroundColor: 'darkgreen'
     },
     dropdownContainer: {
         marginBottom: 120,
