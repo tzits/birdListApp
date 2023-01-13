@@ -3,9 +3,9 @@ import { Ionicons } from '@expo/vector-icons'
 
 const Button = ({onPress, label1, name1, size, color}) => {
     return (
-        <Pressable style={styles.innerContainer} onPress={onPress}>
-                <Text style={styles.text}>{label1}</Text>
-                <Ionicons name={name1} size={size} color={color} />
+        <Pressable style={({pressed}) => [styles.innerContainer, pressed && styles.pressed]} onPress={onPress}>
+            <Text style={styles.text}>{label1}</Text>
+            <Ionicons name={name1} size={size} color={color} />
         </Pressable>
     )
 }
@@ -17,14 +17,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        height: 150,
-        backgroundColor: 'brown',
+        height: 140,
+        backgroundColor: 'darkgreen',
         flex: 1,
-        paddingBottom: '10%'
     },
     text: {
         justifyContent: 'center',
         alignItems: 'center',
-        color: 'white'
+        color: 'white',
+        fontSize: 16
+    },
+    pressed: {
+        opacity: 0.7,
+        backgroundColor: 'green'
     }
 })
