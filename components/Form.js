@@ -75,12 +75,12 @@ const Form = ({onSubmitBirdHandler}) => {
             </View>
             <View style={styles.formView}>
                 <DoubleButtons 
-                    name1={'camera'}  
+                    name1={'navigate'}  
                     name2={'map'}
                     size={36}
                     color={'white'}
-                    label1={'Use Current Location'}
-                    label2={'Pick Location on Map'}
+                    label1={'Current Location'}
+                    label2={'Pick on Map'}
                     callType={'submit'}
                     onPickLocation={pickLocationHandler}
                 />
