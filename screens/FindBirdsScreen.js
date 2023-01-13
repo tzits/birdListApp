@@ -30,12 +30,12 @@ const FindBirdsScreen = () => {
             </View>
             <View style={styles.buttonContainer}>
                 <DoubleButtons style={styles.button}
-                    name1={'ios-camera'}  
+                    name1={'navigate'}  
                     name2={'map'}
                     size={36}
                     color={'white'}
-                    label1={'Find Birds Near You'}
-                    label2={'Find Bird on Map'}
+                    label1={'Current Location'}
+                    label2={'Pick on Map'}
                     callType={'find'}
                     range={range}
                 />
@@ -51,14 +51,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        backgroundColor: 'darkgreen'
+        backgroundColor: 'darkgreen',
+        alignContent: 'center'
     },
     dropdownContainer: {
-        marginBottom: 120,
-        marginTop: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
         flex: 1
     },
     buttonContainer: {
-        flex: 3
+        flex: 1
     }
 })
