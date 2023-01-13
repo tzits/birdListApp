@@ -26,7 +26,7 @@ const BirdList = ({data, onDeleteHandler}) => {
       <FlatList style={styles.container}
         data={data}
         renderItem={renderItem}
-        keyExtractor={(bird) => bird.id}
+        keyExtractor={(bird) => bird.id + bird.speciesCode}
         extraData={data}
       />
     )
