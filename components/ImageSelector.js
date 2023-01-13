@@ -76,10 +76,6 @@ const ImageSelector = ({onPickImage}) => {
         imagePreview = <Image style={styles.image} source={{ uri: pickedImage }} />
     }
 
-    if (!pickedImage) {
-        imagePreview = <View></View>
-    }
-
     return(
         <View style={styles.container}>
             {imagePreview}
