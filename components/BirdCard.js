@@ -1,6 +1,5 @@
 import { StyleSheet, View, Pressable, Image, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { removeFromList } from '../utils/database'
 
 
 const BirdCard = ({sighting, onDeleteHandler}) => {
