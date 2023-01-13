@@ -1,11 +1,29 @@
-import { View, StyleSheet, Image } from 'react-native'
-import { useState } from 'react'
+import { View, StyleSheet, Image, Text } from 'react-native'
+import { useState, useEffect } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker'
 import ImageButton from './ImageButton'
+import { useIsFocused } from '@react-navigation/native'
+
+
 
 const ImageSelector = ({onPickImage}) => {
-    const [image, setImage] = useState()
+    const [pickedImage, setPickedImage] = useState(null)
+    const [rerender, setRerender] = useState(false)
+
+    const isFocused = useIsFocused()
+
+
+    useEffect(() => {
+        if (!rerender) {
+            setRerender(true)
+        } else {
+            setRerender(false)
+            setPickedImage()
+        }
+
+    },[isFocused])
+
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -16,7 +34,7 @@ const ImageSelector = ({onPickImage}) => {
         })
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri)
+            setPickedImage(result.assets[0].uri)
             onPickImage(result.assets[0].uri)
         }
     }
@@ -32,7 +50,6 @@ const ImageSelector = ({onPickImage}) => {
             alert('Please Grant Permission')
             return false
         }
-
         return true
     }
 
@@ -48,13 +65,24 @@ const ImageSelector = ({onPickImage}) => {
             aspect: [16,9],
             quality: 0.5,
         });
-        setImage(image.assets[0].uri)
+
+        setPickedImage(image.assets[0].uri)
         onPickImage(image.assets[0].uri)
+    }
+
+    let imagePreview = <View></View>
+
+    if (pickedImage) {
+        imagePreview = <Image style={styles.image} source={{ uri: pickedImage }} />
+    }
+
+    if (!pickedImage) {
+        imagePreview = <View></View>
     }
 
     return(
         <View style={styles.container}>
-            {image && <Image style={styles.image} source={{ uri: image }} />}
+            {imagePreview}
             <View style={styles.buttonContainer}>
                 <View style={styles.buttonView}>
                     <ImageButton onPress={pickImage} text={'Pick Image'} />
