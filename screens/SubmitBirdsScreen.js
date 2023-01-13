@@ -1,8 +1,13 @@
 import { StyleSheet, Text, View, ScrollView  } from "react-native";
 import Form from "../components/Form";
+import { insertBirdSighting } from "../utils/database";
 
-const SubmitBirdsScreen = ({route}) => {
+const SubmitBirdsScreen = ({route, navigation}) => {
 
+    const submitBirdHandler = async (bird) => {
+        await insertBirdSighting(bird)
+        navigation.navigate('Bird List')
+    }
 
     return(
         <ScrollView style={styles.scroll}>
@@ -10,7 +15,7 @@ const SubmitBirdsScreen = ({route}) => {
                 <View style={styles.headerView}>
                     <Text style={styles.header}>Submit a Bird</Text>
                 </View>
-                <Form />
+                <Form onSubmitBirdHandler={submitBirdHandler} />
             </View>
         </ScrollView>
     )
@@ -23,7 +28,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'brown',
+        backgroundColor: 'darkgreen',
         paddingBottom: 100
     },
     header: {
@@ -37,6 +42,6 @@ const styles = StyleSheet.create({
         
     },
     scroll: {
-        backgroundColor: 'brown'
+        backgroundColor: 'darkgreen'
     }
 })
