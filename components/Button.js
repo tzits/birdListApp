@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         color: 'white',
-        fontSize: 16
+        fontSize: 16,
+        fontWeight: 'bold'
     },
     pressed: {
         opacity: 0.7,
