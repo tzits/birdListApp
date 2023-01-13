@@ -15,9 +15,11 @@ const BirdDetails = ({route}) => {
     let lng = route.params.location.lng
     let speciesInfo = route.params.speciesInfo
 
-    let searchTerm = speciesInfo.species.replace(/ /g, "+")
+    let searchTerm = ''
     if (speciesInfo.comName != undefined) {
         searchTerm = searchTerm = speciesInfo.comName.replace(/ /g, "+") + '+bird'
+    } else {
+        searchTerm = speciesInfo.species.replace(/ /g, "+")
     }
     
 
@@ -40,7 +42,9 @@ const BirdDetails = ({route}) => {
 
     let info = (
         <>
-            <InfoComponent 
+            <InfoComponent
+                label1={'Sci Name'}
+                label2={'Bird Type'}
                 text1={speciesInfo.comName}
                 text2={speciesInfo.sciName}
                 text3={speciesInfo.familyComName}
@@ -48,7 +52,9 @@ const BirdDetails = ({route}) => {
             />
             <InfoComponent 
                 text1={'Taxonomy'}
+                label1={'Family'}
                 text2={speciesInfo.familySciName}
+                label2={'Order'}
                 text3={speciesInfo.order}
                 size={18}
             />
@@ -59,7 +65,9 @@ const BirdDetails = ({route}) => {
         // imageButton = null
         info = (
             <InfoComponent
+                label1={'Number'}
                 text1={speciesInfo.species}
+                label2={'Details'}
                 text2={speciesInfo.count}
                 text3={`Seen at ${speciesInfo.time} on ${speciesInfo.date}`}
                 size={24}
@@ -80,10 +88,10 @@ const BirdDetails = ({route}) => {
                 <View style={styles.innerContainer}>
                     {mapRender}
                 </View>
-                <ImageButton 
-        onPress={() => WebBrowser.openBrowserAsync(`https://www.google.com/search?q=${searchTerm}`)}
-        text={'Learn More'}
-    />
+                    <ImageButton 
+                        onPress={() => WebBrowser.openBrowserAsync(`https://www.google.com/search?q=${searchTerm}`)}
+                        text={'Learn More'}
+                    />
             </View>
         </ScrollView>
     )
