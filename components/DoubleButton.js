@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ActivityIndicator, Text } from "react-native";
 import { useState } from "react";
 import { getCurrentPositionAsync, useForegroundPermissions, PermissionStatus } from 'expo-location'
 import { useNavigation } from '@react-navigation/native'
@@ -10,7 +10,7 @@ import Button from "./Button";
 const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, range, onPickLocation}) => {
     const [locationPermissionInformation, requestPermission] = useForegroundPermissions()
     const navigation = useNavigation();
-    const [located, setLocated] = useState(false)
+    const [located, setLocated] = useState()
 
     const verifyPermissions = async () => {
         if (locationPermissionInformation.status === PermissionStatus.UNDETERMINED) {
@@ -25,23 +25,32 @@ const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, ra
     }
 
     const getLocationHandler = async () => {
+        setLocated(true)
+
         const hasPermissions = await verifyPermissions()
         if (!hasPermissions) {
             return
         }
         const location = await getCurrentPositionAsync()
-        setLocated(true)
         if (callType !== 'find') {
             navigation.navigate('Nav', {screen: 'SubmitBirdsScreen'}, {location: location})
             onPickLocation({lat: location.coords.latitude, lng: location.coords.longitude})
+            setLocated()
             return
         }
         const localBirds = await fetchBirds(location.coords.latitude, location.coords.longitude, range)
+        setLocated()
         navigation.navigate('DisplayBirds', {birdArray: localBirds})
     }
 
     const pickOnMapHandler = () => {
         navigation.navigate('Map', {callType: callType, range: range, onPickLocation: onPickLocation})
+    }
+
+    let spinner = <View></View>
+
+    if (located) {
+        spinner = <ActivityIndicator size={'large'}/>
     }
 
     return(
@@ -62,6 +71,7 @@ const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, ra
                     name1={name2} 
                 />
             </View>
+            {spinner}
         </View>
     )
 }
@@ -78,7 +88,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: 150,
-        backgroundColor: 'brown',
+        backgroundColor: 'darkgreen',
         flex: 1,
         paddingBottom: '10%'
     },
@@ -86,5 +96,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         color: 'white'
-    }
+    },
+    container2: {
+        flex: 1,
+        justifyContent: "center"
+      },
+      horizontal: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        padding: 10
+      }
 })
