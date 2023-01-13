@@ -111,3 +111,20 @@ export function fetchBirdSightingDetails() {
     })
     return promise
 }
+
+export const removeFromList = (id) => {
+    const promise = new Promise((resolve, reject) => {
+        database.transaction((tx) => {
+            tx.executeSql('DELETE FROM birdsightings WHERE id = ?', [id],
+                () => {
+                    resolve()
+                },
+                (_, error) => {
+                    console.log(error)
+                    reject(error)
+                }
+            )
+        })
+    })
+    return promise
+}
