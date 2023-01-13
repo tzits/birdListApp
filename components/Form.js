@@ -87,10 +87,10 @@ const Form = ({onSubmitBirdHandler}) => {
             </View>
             <View style={styles.h1Container}>
                 <Text style={styles.header}>Upload a Picture?</Text>
-                <ImageSelector onPickImage={pickImageHandler} val={imagePreview}/>
+                <ImageSelector onPickImage={pickImageHandler} val={imagePreview} />
             </View>
             <View style={styles.submitButton}>
-                <ImageButton onPress={submitBirdHandler} text={'Submit'}  />
+                <ImageButton onPress={submitBirdHandler} text={'Submit'} />
             </View>
         </ScrollView>
     )
