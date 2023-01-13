@@ -47,7 +47,7 @@ const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, ra
         navigation.navigate('Map', {callType: callType, range: range, onPickLocation: onPickLocation})
     }
 
-    let spinner = <View></View>
+    let spinner = label1
 
     if (located) {
         spinner = <ActivityIndicator size={'large'}/>
@@ -57,7 +57,7 @@ const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, ra
         <View>
             <View style={styles.container}>
                 <Button 
-                    label1={label1} 
+                    label1={spinner} 
                     onPress={getLocationHandler} 
                     color={color} 
                     size={size} 
@@ -71,7 +71,6 @@ const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, ra
                     name1={name2} 
                 />
             </View>
-            {spinner}
         </View>
     )
 }
