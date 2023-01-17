@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, ScrollView, TextInput } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { useState, useCallback } from 'react'
 import FormElement from "./FormElement";
 import DoubleButtons from "./DoubleButton";
