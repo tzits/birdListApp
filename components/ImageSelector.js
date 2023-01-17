@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, Text } from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
 import { useState, useEffect } from 'react'
 import * as ImagePicker from 'expo-image-picker'
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker'
