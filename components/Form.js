@@ -1,13 +1,21 @@
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { useState, useCallback } from 'react'
+import { useNavigation } from "@react-navigation/native";
 import FormElement from "./FormElement";
 import DoubleButtons from "./DoubleButton";
 import ImageSelector from "./ImageSelector";
 import ImageButton from "./ImageButton";
 import { BirdSighting } from "../models/BirdSighting";
 import { setMyDate, setMyTime } from "../utils/date";
+import { insertBirdSighting } from "../utils/database";
 
-const Form = ({onSubmitBirdHandler}) => {
+const Form = () => {
+    const navigation = useNavigation()
+
+    const onSubmitBirdHandler = async (bird) => {
+        await insertBirdSighting(bird)
+        navigation.navigate('Bird List')
+    }
 
     const [birdSpecies, setBirdSpecies] = useState()
     const [birdCount, setBirdCount] = useState()
