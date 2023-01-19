@@ -13,7 +13,7 @@ const BirdCard = ({sighting, onDeleteHandler}) => {
     }
 
     const getDetailsHandler = async () => {
-        navigation.navigate('BirdDetails', {speciesInfo: sighting, location: {lat: sighting.lat, lng: sighting.lng}})
+        navigation.navigate('Bird Details', {speciesInfo: sighting, location: {lat: sighting.lat, lng: sighting.lng}})
     }
 
     const deleteCardHandler = () => {
