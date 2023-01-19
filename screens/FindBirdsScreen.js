@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import DoubleButtons from '../components/DoubleButton'
 import { useState } from 'react'
 import { SelectList } from 'react-native-dropdown-select-list'
+import { Ionicons } from '@expo/vector-icons'
 
 const FindBirdsScreen = () => {
     const [range, setRange] = useState('10')
@@ -18,14 +19,16 @@ const FindBirdsScreen = () => {
         <View style={styles.container}>
             <View style={styles.dropdownContainer}>
                 <SelectList
+                    arrowicon={<Ionicons name="caret-down" size={20} color="white"></Ionicons>}
                     setSelected={(val) => setRange(val.slice(0,-2))}
                     data={selectData}
                     save="value"
                     inputStyles={{color: 'white', fontSize: 20}}
                     dropdownTextStyles={{color: 'white', fontSize: 20}}
-                    placeholder={'Select Search Range'}
+                    placeholder={'Select Search Range  '}
                     search={false}
                     searchPlaceholder={'Select Search Range'}
+                    boxStyles={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
                 />
             </View>
             <View style={styles.buttonContainer}>
