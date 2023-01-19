@@ -2,12 +2,7 @@ import { StyleSheet, Text, View, ScrollView  } from "react-native";
 import Form from "../components/Form";
 import { insertBirdSighting } from "../utils/database";
 
-const SubmitBirdsScreen = ({route, navigation}) => {
-
-    const submitBirdHandler = async (bird) => {
-        await insertBirdSighting(bird)
-        navigation.navigate('Bird List')
-    }
+const SubmitBirdsScreen = () => {
 
     return(
         <ScrollView style={styles.scroll}>
@@ -15,7 +10,7 @@ const SubmitBirdsScreen = ({route, navigation}) => {
                 <View style={styles.headerView}>
                     <Text style={styles.header}>Submit a Bird</Text>
                 </View>
-                <Form onSubmitBirdHandler={submitBirdHandler} />
+                <Form />
             </View>
         </ScrollView>
     )
