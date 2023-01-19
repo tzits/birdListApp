@@ -19,7 +19,7 @@ const ListItem = ({ count, species, date, location, speciesCode, lat, lng}) => {
 
     const getDetailsHandler = async () => {
         const birdDeets = await getDetails(speciesCode)
-        navigation.navigate('BirdDetails', {speciesInfo: birdDeets[0], location: {lat, lng}})
+        navigation.navigate('Bird Details', {speciesInfo: birdDeets[0], location: {lat, lng}})
     }
 
     return (
