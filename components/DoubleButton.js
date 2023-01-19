@@ -44,7 +44,7 @@ const DoubleButtons = ({ name1, name2, size, color, label1, label2, callType, ra
     }
 
     const pickOnMapHandler = () => {
-        navigation.navigate('Map', {callType: callType, range: range, onPickLocation: onPickLocation})
+        navigation.navigate('Pick Location', {callType: callType, range: range, onPickLocation: onPickLocation})
     }
 
     let spinner = label1
