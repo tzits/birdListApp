@@ -15,6 +15,7 @@ import { init } from './utils/database';
 import { Ionicons } from '@expo/vector-icons'
 
 
+
 export default function App() {
   const [dbInit, setdbInit] = useState(false)
 
@@ -52,14 +53,11 @@ export default function App() {
     >
       <BottomTab.Screen 
         name="Home" 
-        component={WelcomeScreen} 
+        component={WelcomeScreen}
       />
+      <BottomTab.Screen name="Submit Birds" component={SubmitBirdsScreen} options={homeButton} />
       <BottomTab.Screen 
-        name="Find Birds" 
-        component={FindBirdsScreen}
-        options={homeButton}           
-      />
-      <BottomTab.Screen name="Submit Bird" component={SubmitBirdsScreen} options={homeButton} />
+        name="Find Birds" component={FindBirdsScreen} options={homeButton} />
       <BottomTab.Screen name="Bird List" component={SeenBirdsScreen} options={homeButton} />
     </BottomTab.Navigator>)
   }
@@ -84,8 +82,8 @@ export default function App() {
             component={DisplayBirds} 
             options={homeButton}
           />
-          <Stack.Screen name="Map" component={Map} />
-          <Stack.Screen name="BirdDetails" component={BirdDetails} options={{presentation: 'modal'}} />
+          <Stack.Screen name="Pick Location" component={Map} />
+          <Stack.Screen name="Bird Details" component={BirdDetails} options={{presentation: 'modal'}} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
