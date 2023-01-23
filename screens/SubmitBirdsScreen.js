@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, ScrollView  } from "react-native";
 import Form from "../components/Form";
-import { insertBirdSighting } from "../utils/database";
 
 const SubmitBirdsScreen = () => {
 
